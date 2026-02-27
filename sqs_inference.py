@@ -1,5 +1,6 @@
 import os
 import json
+import uuid
 import boto3
 import torch
 from dotenv import load_dotenv
@@ -51,11 +52,22 @@ while True:
 
     for message in messages:
         body = json.loads(message["Body"])
+        request_id = body["request_id"]
         notes = body["notes"]
+        response_queue = body["response_queue"]
 
         results = model(notes)
-
         print(results)
+
+        response_payload = {
+            "request_id": request_id,
+            "results": results
+        }
+
+        sqs.send_message(
+            QueueUrl=response_queue,
+            MessageBody=json.dumps(response_payload)
+        )
 
         sqs.delete_message(
             QueueUrl=QUEUE_URL,
