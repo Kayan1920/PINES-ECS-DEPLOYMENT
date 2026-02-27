@@ -56,7 +56,7 @@ while True:
         notes = body["notes"]
         response_queue = body["response_queue"]
 
-        results = model(notes)
+        results = model.predict(notes)
         print(results)
 
         response_payload = {
