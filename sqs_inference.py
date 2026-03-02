@@ -5,7 +5,7 @@ import boto3
 import torch
 from dotenv import load_dotenv
 from transformers import pipeline
-from .helper_funcs import parse_s3_path, download_s3_model
+from helper_funcs import parse_s3_path, download_s3_model
 
 # Load environment variables
 load_dotenv()
