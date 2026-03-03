@@ -1,6 +1,5 @@
 import os
 import json
-import uuid
 import boto3
 import torch
 from dotenv import load_dotenv
@@ -17,7 +16,7 @@ MAX_LENGTH = int(os.getenv("MAX_LENGTH"))
 
 # Download and load model
 bucket, prefix = parse_s3_path(MODEL_S3_PATH)
-local_model_dir = "/tmp/model"
+local_model_dir = f"/tmp/models/{prefix}"
 download_s3_model(bucket, prefix, local_model_dir, AWS_REGION)
 
 if not QUEUE_URL:
