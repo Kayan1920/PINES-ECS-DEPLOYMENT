@@ -51,6 +51,14 @@ while True:
 
     for message in messages:
         body = json.loads(message["Body"])
+        if body['is_warmup'] is True:
+            print("Recived warmup call.")
+            sqs.delete_message(
+                QueueUrl=QUEUE_URL,
+                ReceiptHandle=message["ReceiptHandle"],
+            )
+            continue
+
         request_id = body["request_id"]
         notes = body["notes"]
         response_queue = body["response_queue"]
